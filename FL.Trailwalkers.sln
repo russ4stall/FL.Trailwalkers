@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trails.Console", "Trails.Console\Trails.Console.csproj", "{1F7215BB-0FD0-48A3-88C0-830014619656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trails.Domain", "Trails.Domain\Trails.Domain.csproj", "{65849CC4-C584-4A14-A7F6-4ACD0CF1FA85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trails.Web", "Trails.Web\Trails.Web.csproj", "{FE335ABA-1266-4905-914C-B80FE060A09B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F7215BB-0FD0-48A3-88C0-830014619656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F7215BB-0FD0-48A3-88C0-830014619656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F7215BB-0FD0-48A3-88C0-830014619656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F7215BB-0FD0-48A3-88C0-830014619656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65849CC4-C584-4A14-A7F6-4ACD0CF1FA85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65849CC4-C584-4A14-A7F6-4ACD0CF1FA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65849CC4-C584-4A14-A7F6-4ACD0CF1FA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65849CC4-C584-4A14-A7F6-4ACD0CF1FA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE335ABA-1266-4905-914C-B80FE060A09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE335ABA-1266-4905-914C-B80FE060A09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE335ABA-1266-4905-914C-B80FE060A09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE335ABA-1266-4905-914C-B80FE060A09B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+.idea
+bin
+obj
+
+appsettings.Development.json
+.env
+.DS_Store
+.env.local
