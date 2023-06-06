@@ -11,7 +11,19 @@ builder.Services.AddSingleton<ITrailsWebScraper>(x =>
 
 var app = builder.Build();
 
-app.MapGet("/trails", async(TrailsDb db) => await db.Trails.ToListAsync());
+app.MapGet("/trails", async (TrailsDb db) => await db.Trails.ToListAsync());
+
+app.MapGet("/test", async () => {
+
+    using (var client = new HttpClient())
+    {
+        HttpResponseMessage response = new HttpResponseMessage();
+
+        response = await client.GetAsync("https://www.google.com/").ConfigureAwait(false);
+
+        return response.Content.ReadAsStringAsync().Result;
+    }
+});
 
 app.MapPost("/trails/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
 {
