@@ -20,24 +20,11 @@ public class TrailsWebScraper : ITrailsWebScraper
     {
         var trailList = new List<Trail>();
         
-        Console.WriteLine("Bout-tuh scrape...");
-        
-        string html;
-        using (var client = new HttpClient())
-        {
-            HttpResponseMessage response = new HttpResponseMessage();
+        var web = new HtmlWeb();
+        var doc = web.Load(_uri);
 
-            response = client.GetAsync(_uri).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            html = response.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(html);
-        }
-
-        var htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(html);
-        
         const string xpath = "//div[contains(@id, 'body-content')]//div[contains(@class, 'ezrichtext-field')]//h2";
-        var stateForestNodes = htmlDoc.DocumentNode.SelectNodes(xpath);
+        var stateForestNodes = doc.DocumentNode.SelectNodes(xpath);
 
         foreach (var node in stateForestNodes)
         {
