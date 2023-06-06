@@ -20,6 +20,8 @@ public class TrailsWebScraper : ITrailsWebScraper
     {
         var trailList = new List<Trail>();
         
+        Console.WriteLine("Bout-tuh scrape...");
+        
         string html;
         using (var client = new HttpClient())
         {
@@ -28,6 +30,7 @@ public class TrailsWebScraper : ITrailsWebScraper
             response = client.GetAsync(_uri).ConfigureAwait(false).GetAwaiter().GetResult();
 
             html = response.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(html);
         }
 
         var htmlDoc = new HtmlDocument();
