@@ -15,10 +15,19 @@ app.MapGet("/trails", async(TrailsDb db) => await db.Trails.ToListAsync());
 
 app.MapPost("/trails/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
 {
-    var trails = scraper.ScrapeTrails();
+    List<Trail> trails;
+    try
+    {
+        trails = scraper.ScrapeTrails();
 
-    db.Trails.AddRange(trails);
-    await db.SaveChangesAsync();
+        db.Trails.AddRange(trails);
+        await db.SaveChangesAsync();
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message, String.Empty, 500);
+    }
+    
     
     return Results.Ok($"Added {trails.Count} trails to the database.");
 });
