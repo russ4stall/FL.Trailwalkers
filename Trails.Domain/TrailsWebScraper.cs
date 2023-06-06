@@ -20,8 +20,19 @@ public class TrailsWebScraper : ITrailsWebScraper
     {
         var trailList = new List<Trail>();
         
-        var web = new HtmlWeb();
-        var htmlDoc = web.Load(_uri);
+        string html;
+        using (var client = new HttpClient())
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            response = client.GetAsync(_uri).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            html = response.Content.ReadAsStringAsync().Result;
+        }
+
+        var htmlDoc = new HtmlDocument();
+        htmlDoc.LoadHtml(html);
+        
         const string xpath = "//div[contains(@id, 'body-content')]//div[contains(@class, 'ezrichtext-field')]//h2";
         var stateForestNodes = htmlDoc.DocumentNode.SelectNodes(xpath);
 
