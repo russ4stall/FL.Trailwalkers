@@ -4,14 +4,16 @@ using Trails.Domain;
 var  myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy(name: myAllowSpecificOrigins,
-//         policy  =>
-//         {
-//             policy.WithOrigins("https://playground.apps.fourscorepicks.com");
-//         });
-// });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins("https://playground.apps.fourscorepicks.com")
+                .AllowAnyHeader().
+                AllowAnyMethod();
+        });
+});
 
 
 builder.Services.AddDbContext<TrailsDb>(opt => opt.UseInMemoryDatabase("Trails"));
@@ -34,8 +36,6 @@ var app = builder.Build();
 
 //app.UseForwardedHeaders();
 
-//app.UseCors(myAllowSpecificOrigins);
-
 app.MapGet("/trails", async (TrailsDb db) => await db.Trails.ToListAsync());
 
 app.MapPost("/trails/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
@@ -57,4 +57,6 @@ app.MapPost("/trails/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
     return Results.Ok($"Added {trails.Count} trails to the database.");
 });
 
+
+app.UseCors(myAllowSpecificOrigins);
 app.Run();
