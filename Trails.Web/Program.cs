@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Trails.Domain;
 
@@ -33,7 +32,9 @@ builder.Services.AddSingleton<ITrailsWebScraper>(x =>
 
 var app = builder.Build();
 
-app.UseForwardedHeaders();
+//app.UseForwardedHeaders();
+
+app.UseCors(myAllowSpecificOrigins);
 
 app.MapGet("/trails", async (TrailsDb db) => await db.Trails.ToListAsync());
 
