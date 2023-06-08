@@ -8,4 +8,5 @@ public class TrailsDb : DbContext
     { }
 
     public DbSet<Trail> Trails => Set<Trail>();
+    public DbSet<HikeLog> HikeLogs => Set<HikeLog>();
 }
