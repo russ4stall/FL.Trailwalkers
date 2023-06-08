@@ -59,9 +59,9 @@ hikeLogs.MapGet("/", async (
     foreach (var hikeLog in hikeLogs)
     {
         html += $@"
-            <tr>
+            <tr hx-get=""https://trails.apps.fourscorepicks.com/hike-logs/{hikeLog.Id}"" hx-push-url=""true"">
                 <td>{hikeLog.Id}</td>
-                <td><a href=""https://trails.apps.fourscorepicks.com/hike-logs/{hikeLog.Id}"">{hikeLog.Name}</a></td>
+                <td>{hikeLog.Name}</td>
                 <td>{hikeLog.Trail}</td>
                 <td>{hikeLog.Length}</td>
             </tr>
