@@ -49,9 +49,9 @@ trails.MapPost("/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
 });
 
 var hikeLogs = app.MapGroup("/hike-logs");
-hikeLogs.MapGet("/", async (TrailsDb db) =>
+hikeLogs.MapGet("/", async (TrailsDb db, CancellationToken cancellationToken) =>
 {
-    var hikeLogs = db.HikeLogs.ToList();
+    var hikeLogs = await db.HikeLogs.ToListAsync(cancellationToken);
     var html = string.Empty;
 
     foreach (var hikeLog in hikeLogs)
@@ -66,6 +66,19 @@ hikeLogs.MapGet("/", async (TrailsDb db) =>
         ";
     }
 
+    return Results.Extensions.Html(html);
+});
+
+hikeLogs.MapGet("/{id:long}", async (long id, TrailsDb db, CancellationToken cancellationToken) =>
+{
+    var hikeLog = await db.HikeLogs.FirstOrDefaultAsync(x => x.Id == id);
+    var html = $@"
+        <dl>
+          <dt>Name: {hikeLog.Name}</dt>
+          <dd>Trail: {hikeLog.Trail}</dd>
+          <dt>Length: {hikeLog.Trail}</dt>
+        </dl>
+        ";
     return Results.Extensions.Html(html);
 });
 
