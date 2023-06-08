@@ -78,7 +78,7 @@ hikeLogs.MapGet("/{id:long}", async (long id, TrailsDb db, CancellationToken can
 {
     var hikeLog = await db.HikeLogs.FirstOrDefaultAsync(x => x.Id == id);
     var html = $@"
-        <button type=""button"" onclick=""javascript:history.back()"">Show All</button>
+        <button class=""btn btn-secondary"" type=""button"" onclick=""javascript:history.back()"">Show All</button>
         <dl>
           <dt>Name</dt>
           <dd>{hikeLog.Name}</dd>
@@ -108,7 +108,10 @@ hikeLogs.MapPost("/", async (
     await db.SaveChangesAsync(cancellationToken);
     
     var html = $@"
-        <tr>
+        <tr hx-get=""https://trails.apps.fourscorepicks.com/hike-logs/{hikeLog.Id}""
+            hx-target=""#HikeLogsTable""
+            hx-swap=""outerHTML""
+            hx-push-url=""true"">
             <td>{hikeLog.Id}</td>
             <td>{hikeLog.Name}</td>
             <td>{hikeLog.Trail}</td>
