@@ -70,10 +70,18 @@ hikeLogs.MapGet("/", async (TrailsDb db) =>
 });
 
 hikeLogs.MapPost("/", async (
-    HikeLog hikeLog,
+    HttpContext ctx,
     TrailsDb db,
     CancellationToken cancellationToken) =>
 {
+    decimal.TryParse(ctx.Request.Form["length"], out var length);
+    var hikeLog = new HikeLog()
+    {
+        Name = ctx.Request.Form["name"],
+        Trail = ctx.Request.Form["trail"],
+        Length = length
+    };
+    
     await db.HikeLogs.AddAsync(hikeLog, cancellationToken);
     await db.SaveChangesAsync(cancellationToken);
     
@@ -87,9 +95,6 @@ hikeLogs.MapPost("/", async (
     ";
     return Results.Extensions.Html(html);
 });
-
-
-
 
 // app.UseCors(myAllowSpecificOrigins);
 app.Run();
