@@ -49,7 +49,9 @@ trails.MapPost("/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
 });
 
 var hikeLogs = app.MapGroup("/hike-logs");
-hikeLogs.MapGet("/", async (TrailsDb db, CancellationToken cancellationToken) =>
+hikeLogs.MapGet("/", async (
+    TrailsDb db,
+    CancellationToken cancellationToken) =>
 {
     var hikeLogs = await db.HikeLogs.ToListAsync(cancellationToken);
     var html = string.Empty;
@@ -59,7 +61,7 @@ hikeLogs.MapGet("/", async (TrailsDb db, CancellationToken cancellationToken) =>
         html += $@"
             <tr>
                 <td>{hikeLog.Id}</td>
-                <td>{hikeLog.Name}</td>
+                <td><a href=""https://trails.apps.fourscorepicks.com/hike-logs/{hikeLog.Id}"">{hikeLog.Name}</a></td>
                 <td>{hikeLog.Trail}</td>
                 <td>{hikeLog.Length}</td>
             </tr>
