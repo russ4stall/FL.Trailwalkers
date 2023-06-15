@@ -66,7 +66,7 @@ hikeLogsApi.MapPost("/", async (
 {
     await db.HikeLogs.AddAsync(hikeLog, cancellationToken);
     await db.SaveChangesAsync(cancellationToken);
-    Results.Created($"/api/hike-logs/{hikeLog.Id}", hikeLog);
+    return hikeLog; // tried Results.Created() however it returned an empty body with status of 200 (instead of 201)...
 });
 
 var hikeLogs = app.MapGroup("/hike-logs");
