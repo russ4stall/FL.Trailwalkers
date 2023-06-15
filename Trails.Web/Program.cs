@@ -48,6 +48,27 @@ trails.MapPost("/sync", async (TrailsDb db, ITrailsWebScraper scraper) =>
     return Results.Ok($"Added {trails.Count} trails to the database.");
 });
 
+var hikeLogsApi = app.MapGroup("api/hike-logs");
+hikeLogsApi.MapGet("/", async (
+    TrailsDb db,
+    CancellationToken cancellationToken) => await db.HikeLogs.ToListAsync(cancellationToken));
+
+hikeLogsApi.MapGet("/{id:long}", async (long id, TrailsDb db, CancellationToken cancellationToken) =>
+{
+    var hikeLog = await db.HikeLogs.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    return hikeLog is null ? Results.NotFound(id) : Results.Ok(hikeLog);
+});
+
+hikeLogsApi.MapPost("/", async (
+    HikeLog hikeLog,
+    TrailsDb db,
+    CancellationToken cancellationToken) =>
+{
+    await db.HikeLogs.AddAsync(hikeLog, cancellationToken);
+    await db.SaveChangesAsync(cancellationToken);
+    Results.Created($"/api/hike-logs/{hikeLog.Id}", hikeLog);
+});
+
 var hikeLogs = app.MapGroup("/hike-logs");
 hikeLogs.MapGet("/", async (
     TrailsDb db,
