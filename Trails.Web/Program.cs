@@ -78,7 +78,7 @@ hikeLogsApi.MapDelete("/{id:long}", async (long id, TrailsDb db, CancellationTok
     {
         db.HikeLogs.Remove(hikeLog);
         await db.SaveChangesAsync();
-        return Results.Ok(hikeLog);
+        return Results.Ok();
     }
 
     return Results.NotFound();
