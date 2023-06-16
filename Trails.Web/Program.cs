@@ -59,6 +59,31 @@ hikeLogsApi.MapGet("/{id:long}", async (long id, TrailsDb db, CancellationToken 
     return hikeLog is null ? Results.NotFound(id) : Results.Ok(hikeLog);
 });
 
+hikeLogsApi.MapPut("/{id:long}", async (long id, HikeLog hikeLog, TrailsDb db, CancellationToken cancellationToken) =>
+{
+    var updateHikeLog = await db.HikeLogs.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+    updateHikeLog.Length = hikeLog.Length;
+    updateHikeLog.Name = hikeLog.Name;
+    updateHikeLog.Trail = hikeLog.Trail;
+    
+    await db.SaveChangesAsync(cancellationToken);
+    
+    return Results.Ok(updateHikeLog);
+});
+
+hikeLogsApi.MapDelete("/{id:long}", async (long id, TrailsDb db, CancellationToken cancellationToken) =>
+{
+    if (await db.HikeLogs.FindAsync(id) is HikeLog hikeLog)
+    {
+        db.HikeLogs.Remove(hikeLog);
+        await db.SaveChangesAsync();
+        return Results.Ok(hikeLog);
+    }
+
+    return Results.NotFound();
+});
+
 hikeLogsApi.MapPost("/", async (
     HikeLog hikeLog,
     TrailsDb db,
